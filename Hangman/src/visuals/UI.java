@@ -12,6 +12,7 @@ public class UI extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		Hangman hm = new Hangman();
 		// TODO Auto-generated method stub
 		
 		GridPane root = new GridPane();
@@ -20,7 +21,7 @@ public class UI extends Application {
 		text.setText("Hangman");
 		
 		Text hint = new Text();
-		text.setText(Hangman.displayHint());
+		text.setText(hm.displayHint());
 	
 		
 		TextField input = new TextField();
