@@ -3,11 +3,16 @@ package logic;
 import java.util.Random;
 import java.util.Scanner;
 
+import visuals.UI;
+
 public class Hangman {
 	
 	int limit = 10;
 	int guessesTaken = 0;
+	int remainingGuesses =  limit - guessesTaken;
 	String target;
+	String win = "";
+	String gameOver = "";
 	// collection of chars in target
 	char guessChar;
 	char[] charArray;
@@ -18,30 +23,68 @@ public class Hangman {
 			"Rose", "Germany", "Soul", "Music", "Telephone", "Dog", "Cat", "Bread", "Marmelade", "World", "Mouse"};
 
 	public Hangman() {
-		sc = new Scanner(System.in);
-		createTarget(); //TODO
-		usedChars = new char[10];
-		while (guessesTaken < limit && !checkWin()) {
-			System.out.println("Guess a character. You have " + (limit - guessesTaken) + " guesses left.");
-			String temp = sc.next();
-			guessChar = temp.charAt(0);
+		//setup for each game
+		createTarget(); //returns target
+		createCharArray();
+		createDisplay();
+		createUsedChars();
+		
+		//game logic
+		while (guessesTaken < limit && !checkWin()) { // or remainingGuesses > 0 && !checkWin()
+			
+			String temp = (UI.userGuess).toLowerCase();//gets user guess
+			guessChar = temp.charAt(0);//stores user guess (character only)
 			usedChars[guessesTaken] = guessChar;
 			checkGuess();
 			guessesTaken++;
-			displayHint();
+			updateDisplay(); //returns hint
 
 			if (checkWin() == true) {
-				System.out.println("Yippie, you've won! You only took " + guessesTaken + " guesses.");
+				win = "Yippie, you've won! You only took " + guessesTaken + " guesses.";
 
 			}
 		}
 		if (checkWin() != true) {
-			System.out.println("Game Over! Unfortunately, you ran out of guesses. \n"
+			gameOver = ("Game Over! Unfortunately, you ran out of guesses. \n"
 					+ "The word we were looking for was: " + target);
 		}
-		sc.close();
+	}
+	private String createTarget(){
+		Random r = new Random();
+		target = targetCollection [r.nextInt(targetCollection.length)];
+		return target;
+	}
+	
+	private char [] createCharArray(){
+		charArray = target.toCharArray();
+		return charArray;
+	}
+	
+	private char [] createDisplay(){
+		display = new char[charArray.length];
+		for (int i = 0; i < display.length; i++) {
+			display[i] = '_';
+		}
+		return display;
+	}
+	
+	private char [] createUsedChars() {
+		usedChars = new char[limit];
+		return usedChars;
 	}
 
+	
+	public String updateDisplay() { //TODO could be smoother!
+		char[] array = new char [display.length];
+		
+		for (int i = 0; i < display.length; i++) {
+			array [i] = (display[i]);
+		}
+		String hint = new String(array);
+		return hint;
+	}
+
+	
 //	public void createTarget() {
 //		System.out.println("Please enter the word you want users to guess.");
 //		target = sc.next();
@@ -52,15 +95,7 @@ public class Hangman {
 //			display[i] = '_';
 //		}
 	
-	public String createTarget(){
-		Random r = new Random();
-		target = targetCollection [r.nextInt(targetCollection.length-1)];
-		display = new char[charArray.length];
-		for (int i = 0; i < display.length; i++) {
-			display[i] = '_';
-		}
-		return target;
-	}
+	
 
 	public void checkGuess() {
 		for (int i = 0; i < charArray.length; i++) {
@@ -96,28 +131,9 @@ public class Hangman {
 
 	}*/
 
-	public String displayHint() {
-		char[] array = new char [display.length];
-		
-		for (int i = 0; i < display.length; i++) {
-			array [i] = (display[i]);
-		}
-		String hint = new String(array);
-		return hint;
-	}
+
 
 	public static void main(String[] args) {
 		Hangman h = new Hangman();
 	}
 }
-/*
- * 
- * chars in target String display chars guessed correctly by user placeholder _
- * for chars not revealed yet ? visual output for guesses taken/limit
- * 
- * x target String x int limit x int guesses x create Scanner object to read
- * user input x GameOver when guesses >= limit
- * 
- * 
- * 
- */
