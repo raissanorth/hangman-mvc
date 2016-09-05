@@ -26,7 +26,7 @@ public class UI extends Application {
 		text.setText("Hangman");
 
 		Text hint = new Text();
-		text.setText(hm.displayHint());
+		text.setText(hm.updateDisplay());
 
 		TextField input = new TextField();
 		input.setPromptText("Enter a character.");
