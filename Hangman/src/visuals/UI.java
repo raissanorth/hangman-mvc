@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import logic.Hangman;
@@ -24,6 +25,7 @@ public class UI extends Application {
 
 		final Text text = new Text();
 		text.setText("Hangman");
+		text.setFont(Font.font("Arial", 30));
 
 		Text hint = new Text();
 		text.setText(hm.updateDisplay());
@@ -31,21 +33,24 @@ public class UI extends Application {
 		TextField input = new TextField();
 		input.setPromptText("Enter a character.");
 		input.setFocusTraversable(false);
-
+	
 		Button bEnter = new Button();
 		bEnter.setText("Enter");
+		
+		//layout - position elements on grid
+		//(child, columnIndex, rowIndex, colspan, rowspan)
+		root.add(text, 3, 1, 9, 3);
+		root.add(input, 3, 5, 5, 2);
+		root.add(bEnter,9, 5, 4, 2);
 
 		bEnter.setOnAction(new EventHandler<ActionEvent>() {
 
 			public void handle(ActionEvent arg0) {
-				String userGuess = input.getText();
+				userGuess = input.getText();
 				input.clear();
+				hm.playGame();
 			}
 		});
-
-		root.add(text, 1, 3, 9, 3);
-		root.add(input, 3, 9);
-
 		Scene scene = new Scene(root, 500, 500);
 		primaryStage.setTitle("Hangman");
 		primaryStage.setScene(scene);
