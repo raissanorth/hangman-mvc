@@ -8,11 +8,12 @@ import visuals.UI;
 public class Hangman {
 
 	int limit = 10;
-	int guessesTaken = 0;
+	private int guessesTaken = 0;
 	int remainingGuesses = limit - guessesTaken;
 	String target;
 	String win = "";
 	String gameOver = "";
+	String hint;
 	char guessChar;
 	char[] charArray;
 	char[] display;
@@ -26,27 +27,31 @@ public class Hangman {
 		target = createTarget(); // returns target
 		charArray = createCharArray();
 		display = createDisplay();
+		hint = updateHint();
 		usedChars = createUsedChars();
 	}
 
 	public void playGame() {// game logic
-		while (guessesTaken < limit && !checkWin()) { // or remainingGuesses > 0 && !checkWin()
+		if (remainingGuesses > 0 && !checkWin()){
 
 			String temp = (UI.userGuess).toLowerCase();// gets user guess
 			guessChar = temp.charAt(0);// stores user guess (character only)
 			usedChars[guessesTaken] = guessChar;
-			checkGuess();
+			display = checkGuess(); // checks guess and returns display array
+			hint = updateHint();// returns String
 			guessesTaken++;
-			updateDisplay(); // returns hint
+			remainingGuesses = limit - guessesTaken;
+			System.out.println("Guesses taken " + guessesTaken);
+			System.out.println("Guesses remaining " + remainingGuesses);
 
+			
 			if (checkWin() == true) {
 				win = "Yippie, you've won! You only took " + guessesTaken + " guesses.";
 			}
-
-			if (checkWin() != true) {
-				gameOver = ("Game Over! Unfortunately, you ran out of guesses. \n"
-						+ "The word we were looking for was: " + target);
-			}
+		}
+		if (remainingGuesses <= 0) {
+			gameOver = ("Game Over! Unfortunately, you ran out of guesses. \n" + "The word we were looking for was: "
+					+ target);
 		}
 	}
 
@@ -61,7 +66,7 @@ public class Hangman {
 		return charArray;
 	}
 
-	private char[] createDisplay() {
+	public char[] createDisplay() {
 		display = new char[charArray.length];
 		for (int i = 0; i < display.length; i++) {
 			display[i] = '_';
@@ -74,33 +79,21 @@ public class Hangman {
 		return usedChars;
 	}
 
-	public String updateDisplay() { // TODO could be smoother!
-		char[] array = new char[display.length];
-
-		for (int i = 0; i < display.length; i++) {
-			array[i] = (display[i]);
-		}
-		String hint = new String(array);
-		return hint;
-	}
-
-	/*
-	 * public void displayHint() { for (int i = 0; i < display.length; i++) {
-	 * System.out.print(display[i]); } System.out.println(); System.out.print(
-	 * "Characters used so far: ");
-	 * 
-	 * for (int i = 0; i < usedChars.length; i++) {
-	 * System.out.print(usedChars[i] + " "); } System.out.println();
-	 * 
-	 * }
-	 */
-
-	public void checkGuess() {
+	public char[] checkGuess() {
 		for (int i = 0; i < charArray.length; i++) {
 			if (guessChar == (charArray[i])) {
 				display[i] = charArray[i];
 			}
 		}
+		return display;
+	}
+
+	public String updateHint() {
+		hint = (Character.toString(display[0]));
+		for (int i = 1; i < display.length; i++) {
+			hint = hint + " " + display[i];
+		}
+		return hint;
 	}
 
 	public Boolean checkWin() {
@@ -112,5 +105,16 @@ public class Hangman {
 			}
 		}
 		return won;
+	}
+
+	public String getHint() {
+		return hint;
+	}
+
+	public int getGuessesTaken() {
+		return guessesTaken;
+	}
+	public int getRemainingGuesses(){
+		return remainingGuesses;
 	}
 }
