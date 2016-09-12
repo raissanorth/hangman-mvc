@@ -9,10 +9,10 @@ public class Hangman {
 
 	int limit = 10;
 	private int guessesTaken = 0;
-	int remainingGuesses = limit - guessesTaken;
+	public int remainingGuesses = limit - guessesTaken;
 	String target;
-	String win = "";
-	String gameOver = "";
+	public String win = "";
+	public String gameOver = "";
 	String hint;
 	char guessChar;
 	char[] charArray;
@@ -46,7 +46,7 @@ public class Hangman {
 
 			
 			if (checkWin() == true) {
-				win = "Yippie, you've won! You only took " + guessesTaken + " guesses.";
+				win = "Yippie, you've won!";
 			}
 		}
 		if (remainingGuesses <= 0) {
@@ -81,7 +81,7 @@ public class Hangman {
 
 	public char[] checkGuess() {
 		for (int i = 0; i < charArray.length; i++) {
-			if (guessChar == (charArray[i])) {
+			if (guessChar == Character.toLowerCase(charArray[i])) {
 				display[i] = charArray[i];
 			}
 		}
@@ -117,4 +117,16 @@ public class Hangman {
 	public int getRemainingGuesses(){
 		return remainingGuesses;
 	}
-}
+	
+	public char[] getUsedChars(){
+		return usedChars;
+	}
+}	
+	
+	/* Design ideas:
+	 * 
+	 * Add button to allow users to chose limit of guesses.
+	 * Implement high score
+	 * Add hangman visuals
+	 */
+	 
