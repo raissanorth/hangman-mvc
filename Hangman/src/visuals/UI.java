@@ -9,10 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToolBar;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -30,12 +28,9 @@ public class UI extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		hm = new Hangman();
 
-		GridPane root = new GridPane();
+		Pane root = new Pane();
 		root.setPadding(new Insets(10, 10, 10, 10));
-		root.setVgap(10);
-		root.setHgap(10);
-		// for debugging uncomment below line (default value is false)
-		// root.setGridLinesVisible(true);
+		
 
 		ToolBar top = new ToolBar();
 
@@ -73,13 +68,13 @@ public class UI extends Application {
 
 		// layout - position elements on grid
 		// (child, columnIndex, rowIndex, colspan, rowspan)
-		root.add(text, 3, 1, 9, 3);
-		root.add(input, 3, 5, 5, 2);
-		root.add(bEnter, 9, 5, 4, 2);
-		root.add(hint, 3, 8, 9, 2);
-		root.add(guesses, 14, 6, 2, 1);
-		root.add(remainder, 14, 5, 2, 1);
-		root.add(vbchars, 0, 0, 3, 3);
+		root.getChildren().add(text);
+		root.getChildren().add(input);
+		root.getChildren().add(bEnter);
+		root.getChildren().add(hint);
+		root.getChildren().add(guesses);
+		root.getChildren().add(remainder);
+		root.getChildren().add(vbchars);
 
 		bEnter.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -93,11 +88,11 @@ public class UI extends Application {
 				updateCharsTried();
 				if (hm.checkWin()) {
 					won.setText(hm.win);
-					root.add(won, 3, 11);
+					root.getChildren().add(won);
 				}
 				if (hm.remainingGuesses <= 0 && !hm.checkWin()) {
 					gm.setText(hm.gameOver);
-					root.add(gm, 3, 11);
+					root.getChildren().add(gm);
 				}
 
 				// System.out.println("Action handled" + hm.getHint());
@@ -105,6 +100,7 @@ public class UI extends Application {
 		});
 
 		Scene scene = new Scene(root, 500, 500);
+		scene.getStylesheets().add("http://www.jpedal.org/simon/dynamiccss/webcss.css");
 		// scene.getStylesheets().add(UI.class.getResource("style.css").toExternalForm());
 		// //add css stylesheet
 		primaryStage.setTitle("Hangman");

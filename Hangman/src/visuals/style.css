@@ -1,0 +1,7 @@
+import javafx.scene.layout
+
+
+.my-input {
+	fx-font-family: "Times New Roman", Times, serif;
+	font-style: italic;
+}
