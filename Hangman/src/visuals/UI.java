@@ -34,8 +34,8 @@ public class UI extends Application {
 		root.setPadding(new Insets(10, 10, 10, 10));
 		root.setVgap(10);
 		root.setHgap(10);
-		//for debugging uncomment below line (default value is false)
-		//root.setGridLinesVisible(true); 
+		// for debugging uncomment below line (default value is false)
+		// root.setGridLinesVisible(true);
 
 		ToolBar top = new ToolBar();
 
@@ -45,11 +45,12 @@ public class UI extends Application {
 
 		vbchars = new VBox();
 
-		charTriedLabel = new Label("Characters tried");
+		charTriedLabel = new Label("Characters tried:");
 		// create Label [] with same length as char [] in Hangman class
 		charsTried = createCharsTried();
-		System.out.println("charsTried length: " + charsTried.length); //TODO delete me
-
+		System.out.println("charsTried length: " + charsTried.length); // TODO
+																		// delete
+																		// me
 
 		Text won = new Text();
 		Text gm = new Text();
@@ -115,23 +116,25 @@ public class UI extends Application {
 	public static void main(String[] args) {
 		Application.launch(args);
 	}
-	
-	public Label[] createCharsTried(){ 
-		Label [] array = new Label[hm.getUsedChars().length];
+
+	public Label[] createCharsTried() {
+		Label[] array = new Label[hm.getUsedChars().length];
 		vbchars.getChildren().add(charTriedLabel);
 		return array;
 	}
 
 	/* change text of labels to used chars and add label to VBox */
 	public void updateCharsTried() {
-	//TODO clear array or only add latest later rather than every single one AGAIN
-		
-		for (int i = 0; i < charsTried.length; i++) {
+		// TODO clear array or only add latest later rather than every single
+		// one AGAIN
+
+		for (int i = charsTried.length -1; i >= 0; i--) {
 			// make sure that value != default value
 			if (hm.getUsedChars()[i] != '\u0000') {
-				System.out.println("charsTried" + charsTried[i] + " getUsedChars" + i + " " + hm.getUsedChars()[i]);
-				charsTried[i] = new Label(Character.toString(hm.getUsedChars()[i]));//TODO
+				// charsTried at index i to hold uppercase char from getUsedChars at position i
+				charsTried[i] = new Label((Character.toString(hm.getUsedChars()[i])).toUpperCase());
 				vbchars.getChildren().add(charsTried[i]);
+				break;
 			}
 		}
 	}
