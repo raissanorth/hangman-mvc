@@ -1,13 +1,21 @@
-package logic;
+package model;
 
 import java.util.Random;
 import java.util.Scanner;
 
-import visuals.UI;
+import view.UI;
 
 public class Hangman {
 
 	int limit = 10;
+	public int getLimit() {
+		return limit;
+	}
+
+	public void setLimit(int limit) {
+		this.limit = limit;
+	}
+
 	private int guessesTaken = 0;
 	public int remainingGuesses = limit - guessesTaken;
 	String target;
@@ -22,19 +30,22 @@ public class Hangman {
 	String[] targetCollection = new String[] { "Haus", "Elephant", "Summer", "Collection", "Internet", "Photography",
 			"Rose", "Germany", "Soul", "Music", "Telephone", "Dog", "Cat", "Bread", "Marmelade", "World", "Mouse" };
 
-	public Hangman() {
+	UI ui;
+	
+	public Hangman(UI ui) {
 		// setup for each game
 		target = createTarget(); // returns target
 		charArray = createCharArray();
 		display = createDisplay();
 		hint = updateHint();
 		usedChars = createUsedChars();
+		this.ui = ui;
 	}
 
 	public void playGame() {// game logic
 		if (remainingGuesses > 0 && !checkWin()){
 
-			String temp = (UI.userGuess).toLowerCase();// gets user guess
+			String temp = (ui.userGuess).toLowerCase();// gets user guess
 			guessChar = temp.charAt(0);// stores user guess (character only)
 			usedChars[guessesTaken] = guessChar;
 			display = checkGuess(); // checks guess and returns display array
