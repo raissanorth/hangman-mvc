@@ -1,7 +1,9 @@
-import javafx.scene.layout
 
+.scene {
+	-fx-font-style: italic;}
 
-.my-input {
-	fx-font-family: "Times New Roman", Times, serif;
-	font-style: italic;
-}
+.pane {
+	-fx-background-color: #BA7BAB;}
+
+.label {
+	-fx-text-fill: #556b2f;}	

@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToolBar;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -28,7 +29,7 @@ public class UI extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		hm = new Hangman();
 
-		Pane root = new Pane();
+		FlowPane root = new FlowPane();
 		root.setPadding(new Insets(10, 10, 10, 10));
 		
 
@@ -100,9 +101,7 @@ public class UI extends Application {
 		});
 
 		Scene scene = new Scene(root, 500, 500);
-		scene.getStylesheets().add("http://www.jpedal.org/simon/dynamiccss/webcss.css");
-		// scene.getStylesheets().add(UI.class.getResource("style.css").toExternalForm());
-		// //add css stylesheet
+		scene.getStylesheets().add("visuals/style.css");
 		primaryStage.setTitle("Hangman");
 		primaryStage.setScene(scene);
 		primaryStage.show();
